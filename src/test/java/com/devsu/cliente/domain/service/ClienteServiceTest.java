@@ -60,7 +60,8 @@ class ClienteServiceTest {
     void updateClienteNoExistenteTest() {
         Mockito.when(clienteRepository.findByIdentificacion(Mockito.anyString()))
                 .thenReturn(Optional.empty());
-        var exception = Assertions.assertThrows(ClienteException.class, () -> clienteService.update(generarCliente()));
+        var exception = Assertions.assertThrows(
+                ClienteException.class, () -> clienteService.update("123", generarCliente()));
         Assertions.assertEquals(ERROR_ACTUALIZANDO_INFORMACION, exception.getMessage());
     }
 
@@ -68,7 +69,7 @@ class ClienteServiceTest {
     void updateTest() {
         Mockito.when(clienteRepository.findByIdentificacion(Mockito.anyString()))
                 .thenReturn(Optional.of(generarCliente()));
-        Assertions.assertDoesNotThrow(() -> clienteService.update(generarCliente()));
+        Assertions.assertDoesNotThrow(() -> clienteService.update("123", generarCliente()));
     }
 
     @Test

@@ -43,9 +43,9 @@ class ClienteServiceImpl implements ClienteService {
     }
 
     @Override
-    public Cliente update(Cliente cliente) throws ClienteException {
+    public Cliente update(String identificacion, Cliente cliente) throws ClienteException {
         try {
-            var clienteExistenteOpt = clienteRepository.findByIdentificacion(cliente.identificacion());
+            var clienteExistenteOpt = clienteRepository.findByIdentificacion(identificacion);
             if (clienteExistenteOpt.isEmpty()) {
                 log.error(ERROR_CLIENTE_NO_ENCONTRADO);
                 throw new ClienteException(ERROR_ACTUALIZANDO_INFORMACION);
@@ -55,7 +55,7 @@ class ClienteServiceImpl implements ClienteService {
 
             var clienteActualizado = new Cliente(
                     clienteExistente.clienteId(),
-                    clienteExistente.identificacion(),
+                    identificacion,
                     cliente.nombre(),
                     cliente.genero(),
                     cliente.edad(),

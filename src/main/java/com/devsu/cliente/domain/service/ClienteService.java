@@ -13,7 +13,7 @@ public interface ClienteService {
 
     Cliente save(Cliente cliente) throws ClienteException;
 
-    Cliente update(Cliente cliente) throws ClienteException;
+    Cliente update(String identificacion, Cliente cliente) throws ClienteException;
 
     void deleteBy(String identificacion) throws ClienteException;
 
