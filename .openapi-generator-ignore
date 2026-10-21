@@ -24,6 +24,6 @@
 .openapi-generator-ignore
 .openapi-generator/FILES
 .openapi-generator/VERSION
-src/main/java/com/devsu/cliente/api/*
-src/main/java/com/devsu/cliente/api/model/*
+src/main/java/com/devsu/cliente/api/v1/*
+src/main/java/com/devsu/cliente/api/v1/model/*
 pom.xml

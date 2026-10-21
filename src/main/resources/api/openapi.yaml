@@ -6,7 +6,7 @@ info:
 
     links:
     - [Github](https://github.com/wgavidia92/cliente/tree/develop)
-    - [OpenAPI 3.2 Specification](https://spec.openapis.org/oas/v3.2.0.html)
+    - [OpenAPI 3.2 Specification](https://spec.openapis.org/oas/v3.0.3.html)
 
   contact:
     email: wgavidia92@hotmail.com
@@ -15,12 +15,12 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-  - url: https://localhost/v1
+  - url: https://localhost
 tags:
   - name: Clientes
     description: Operaciones que permiten actualizar la informacion de los clientes
 paths:
-  /clientes:
+  /v1/clientes:
     get:
       tags:
         - Clientes
@@ -58,7 +58,7 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Error"
-  /clientes/{identificacion}:
+  /v1/clientes/{identificacion}:
     get:
       tags:
         - Clientes
@@ -172,8 +172,6 @@ components:
           type: string
           example: 'A'
 
-      xml:
-        name: '##default'
     Error:
       type: object
       properties:

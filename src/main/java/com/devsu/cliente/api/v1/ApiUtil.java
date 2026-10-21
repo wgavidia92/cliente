@@ -1,8 +1,8 @@
-package com.devsu.cliente.api;
+package com.devsu.cliente.api.v1;
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.context.request.NativeWebRequest;
 
+import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class ApiUtil {
