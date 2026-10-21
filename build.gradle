@@ -1,34 +1,72 @@
 plugins {
-	id 'java'
-	id 'org.springframework.boot' version '4.1.1'
-	id 'io.spring.dependency-management' version '1.1.7'
+    id 'java'
+    id 'org.springframework.boot' version '4.1.1'
+    id 'io.spring.dependency-management' version '1.1.7'
+    id 'org.openapi.generator' version '7.26.0'
 }
 
 group = 'com.devsu'
 version = '0.0.1-SNAPSHOT'
 
 java {
-	toolchain {
-		languageVersion = JavaLanguageVersion.of(25)
-	}
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(25)
+    }
 }
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-h2console'
-	implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
-	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.1.0'
-	implementation('jakarta.persistence:jakarta.persistence-api:4.0.0-M7')
-	runtimeOnly 'com.h2database:h2'
-	testImplementation 'org.springframework.boot:spring-boot-starter-data-jdbc-test'
-	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.springframework.boot:spring-boot-h2console'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+    implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+    implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:3.1.0'
+    implementation('jakarta.persistence:jakarta.persistence-api:4.0.0-M7')
+    implementation 'jakarta.validation:jakarta.validation-api'
+    implementation 'org.openapitools:jackson-databind-nullable:0.2.7'
+    runtimeOnly 'com.h2database:h2'
+    testImplementation 'org.springframework.boot:spring-boot-starter-data-jdbc-test'
+    testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 tasks.named('test') {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }
+openApiGenerate {
+    generatorName = 'spring'
+
+    inputSpec = "$projectDir/src/main/resources/api/openapi.yaml"
+
+    outputDir = "$projectDir"
+
+    apiPackage = 'com.devsu.cliente.api'
+    modelPackage = 'com.devsu.cliente.api.model'
+    invokerPackage = 'com.devsu.cliente.api.invoker'
+
+    configOptions = [
+            useSpringBoot3       : 'true',
+            interfaceOnly        : 'true',
+            delegatePattern      : 'true',
+            useTags              : 'true',
+            dateLibrary          : 'java25',
+            openApiNullable      : 'false',
+            performBeanValidation: 'true'
+    ]
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir "$buildDir/generated/openapi/src/main/java"
+        }
+    }
+}
+
+compileJava.dependsOn tasks.openApiGenerate
+
+processResources.dependsOn tasks.openApiGenerate
+
+processTestResources.dependsOn tasks.openApiGenerate

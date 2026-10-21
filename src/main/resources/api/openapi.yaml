@@ -1,0 +1,193 @@
+openapi: 3.0.3
+info:
+  title: DEVSU Cliente API
+  description: |-
+    API para gestionar la informacion de clientes. Esta API expone los metodos /GET, /POST, /PUT, /DELETE para manipular la informacion de clientes nuevos o existentes en el sistema
+
+    links:
+    - [Github](https://github.com/wgavidia92/cliente/tree/develop)
+    - [OpenAPI 3.2 Specification](https://spec.openapis.org/oas/v3.2.0.html)
+
+  contact:
+    email: wgavidia92@hotmail.com
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: https://localhost/v1
+tags:
+  - name: Clientes
+    description: Operaciones que permiten actualizar la informacion de los clientes
+paths:
+  /clientes:
+    get:
+      tags:
+        - Clientes
+      summary: Retorna el listado de clientes en la base de datos
+      operationId: obtenerClientes
+      responses:
+        '200':
+          description: Retorna los clientes de la base de datos
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cliente'
+    post:
+      tags:
+        - Clientes
+      summary: Crea un cliente en la base de datos.
+      operationId: createCliente
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cliente'
+      responses:
+        '200':
+          description: Cliente creado en la base de datos
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /clientes/{identificacion}:
+    get:
+      tags:
+        - Clientes
+      summary: Obtiene el cliente por identificacion
+      operationId: getClienteByIdentificacion
+      parameters:
+        - name: identificacion
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cliente'
+        '400':
+          description: Numero de identificacion no encontrado
+        '404':
+          description: Numero de identificacion no encontrado
+        default:
+          description: Error en el sistema
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - Clientes
+      summary: Actualizar informacion del cliente.
+      operationId: actualizarCliente
+      parameters:
+        - name: identificacion
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Cliente'
+      responses:
+        '200':
+          description: successful operation
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Clientes
+      summary: Delete user.
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      parameters:
+        - name: identificacion
+          in: path
+          description: The name that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: Invalid username supplied
+        '404':
+          description: User not found
+        default:
+          description: Unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+components:
+  schemas:
+    Cliente:
+      type: object
+      properties:
+        cliente_id:
+          type: integer
+          format: int64
+          example: 10
+        identificacion:
+          type: string
+          example: '1234'
+        nombre:
+          type: string
+          example: cliente
+        genero:
+          type: string
+          example: 'M'
+        edad:
+          type: integer
+          example: 20
+        direccion:
+          type: string
+          example: 'carrera 1'
+        contrasena:
+          type: string
+          example: '12345'
+        telefono:
+          type: string
+          example: '12345'
+        estado:
+          type: string
+          example: 'A'
+
+      xml:
+        name: '##default'
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+  requestBodies:
+    Cliente:
+      description: Informacion del cliente
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Cliente'
