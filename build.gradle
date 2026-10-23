@@ -43,9 +43,9 @@ openApiGenerate {
 
     outputDir = "$projectDir"
 
-    apiPackage = 'com.devsu.cliente.api.v1'
-    modelPackage = 'com.devsu.cliente.api.v1.model'
-    invokerPackage = 'com.devsu.cliente.api.v1.invoker'
+    apiPackage = 'com.devsu.cliente.adapter.in.web.v1'
+    modelPackage = 'com.devsu.cliente.adapter.in.web.v1.model'
+    invokerPackage = 'com.devsu.cliente.adapter.in.web.v1.invoker'
 
     configOptions = [
             useSpringBoot3       : 'true',
