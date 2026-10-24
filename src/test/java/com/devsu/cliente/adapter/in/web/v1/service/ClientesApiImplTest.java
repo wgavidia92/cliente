@@ -1,10 +1,10 @@
 package com.devsu.cliente.adapter.in.web.v1.service;
 
 import com.devsu.cliente.adapter.in.web.v1.ClientesApi;
-import com.devsu.cliente.application.domain.model.ClienteDto;
 import com.devsu.cliente.application.port.in.ActualizarClienteUseCase;
 import com.devsu.cliente.application.port.in.ObtenerClienteUseCase;
 import com.devsu.cliente.exception.ClienteException;
+import com.devsu.cliente.util.UtilsTest;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -40,7 +40,7 @@ class ClientesApiImplTest {
                   "direccion": "carrera 1",
                   "contrasena": "pass1234",
                   "telefono": "12345",
-                  "estado": "A"
+                  "estado": true
                 }
                 """;
         var url = ClientesApi.PATH_ACTUALIZAR_CLIENTE.replace("{identificacion}", "123456");
@@ -64,15 +64,15 @@ class ClientesApiImplTest {
                   "direccion": "carrera 1",
                   "contrasena": "pass1234",
                   "telefono": "12345",
-                  "estado": "A"
+                  "estado": true
                 }
                 """;
 
         Mockito.when(actualizarClienteUseCase.actualizarCliente(Mockito.any(ActualizarClienteUseCase.ClienteCommand.class)))
                 .thenThrow(new ClienteException("Test"));
 
-        final String codigoError = "\"code\":\"99\"";
-        final String mensajeError = "\"message\":\"Test\"";
+        final String codigoError = "\"codigo\":\"99\"";
+        final String mensajeError = "\"mensaje\":\"Test\"";
 
         var url = ClientesApi.PATH_ACTUALIZAR_CLIENTE.replace("{identificacion}", "123456");
         mockMvc.perform(MockMvcRequestBuilders.put(url)
@@ -86,7 +86,7 @@ class ClientesApiImplTest {
     }
 
     @Test
-    void _createClienteTest() throws Exception {
+    void _crearClienteTest() throws Exception {
         final String fakeRequest = """
                 {
                   "identificacion": "123456",
@@ -96,27 +96,18 @@ class ClientesApiImplTest {
                   "direccion": "carrera 1",
                   "contrasena": "pass1234",
                   "telefono": "12345",
-                  "estado": "A"
+                  "estado": true
                 }
                 """;
 
-        var cliente = new ClienteDto(
-                1L,
-                "123456",
-                "cliente",
-                "M",
-                20,
-                "carrera 1",
-                "12345",
-                "pass1234",
-                "A");
+        var cliente = UtilsTest.generarCliente();
 
         Mockito.when(actualizarClienteUseCase.guardarCliente(Mockito.any(ActualizarClienteUseCase.NuevoClienteCommand.class)))
                 .thenReturn(cliente);
 
         final String clienteId = "\"cliente_id\":1";
 
-        var url = ClientesApi.PATH_CREATE_CLIENTE;
+        var url = ClientesApi.PATH_CREAR_CLIENTE;
         mockMvc.perform(MockMvcRequestBuilders.post(url)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(fakeRequest))
@@ -127,7 +118,7 @@ class ClientesApiImplTest {
     }
 
     @Test
-    void _createClienteConExcepcionTest() throws Exception {
+    void _crearClienteConExcepcionTest() throws Exception {
         final String fakeRequest = """
                 {
                   "identificacion": "",
@@ -137,17 +128,17 @@ class ClientesApiImplTest {
                   "direccion": "carrera 1",
                   "contrasena": "pass1234",
                   "telefono": "12345",
-                  "estado": "A"
+                  "estado": true
                 }
                 """;
 
         Mockito.when(actualizarClienteUseCase.guardarCliente(Mockito.any(ActualizarClienteUseCase.NuevoClienteCommand.class)))
                 .thenThrow(new ClienteException("Test"));
 
-        final String codigoError = "\"code\":\"99\"";
-        final String mensajeError = "\"message\":\"Test\"";
+        final String codigoError = "\"codigo\":\"99\"";
+        final String mensajeError = "\"mensaje\":\"Test\"";
 
-        var url = ClientesApi.PATH_CREATE_CLIENTE;
+        var url = ClientesApi.PATH_CREAR_CLIENTE;
         mockMvc.perform(MockMvcRequestBuilders.post(url)
                         .contentType(MediaType.APPLICATION_JSON_VALUE)
                         .content(fakeRequest))
@@ -159,8 +150,8 @@ class ClientesApiImplTest {
     }
 
     @Test
-    void _deleteUserTest() throws Exception {
-        var url = ClientesApi.PATH_DELETE_USER.replace("{identificacion}", "123456");
+    void _eliminarClienteTest() throws Exception {
+        var url = ClientesApi.PATH_ELIMINAR_CLIENTE.replace("{identificacion}", "123456");
         mockMvc.perform(MockMvcRequestBuilders.delete(url))
                 .andDo(MockMvcResultHandlers.print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
@@ -168,14 +159,14 @@ class ClientesApiImplTest {
     }
 
     @Test
-    void _deleteUserConExcepcionTest() throws Exception {
+    void _eliminarClienteConExcepcionTest() throws Exception {
 
         Mockito.doThrow(new ClienteException("Test"))
                 .when(actualizarClienteUseCase)
                 .eliminarCliente(Mockito.any(ActualizarClienteUseCase.IdentificacionCommand.class));
 
-        final String codigoError = "\"code\":\"99\"";
-        final String mensajeError = "\"message\":\"Test\"";
+        final String codigoError = "\"codigo\":\"99\"";
+        final String mensajeError = "\"mensaje\":\"Test\"";
 
         var url = ClientesApi.PATH_ACTUALIZAR_CLIENTE.replace("{identificacion}", "123456");
         mockMvc.perform(MockMvcRequestBuilders.delete(url))
@@ -186,4 +177,35 @@ class ClientesApiImplTest {
         ;
     }
 
+    @Test
+    void _obtenerClientePorIdentificacionTest() throws Exception {
+        var cliente = UtilsTest.generarCliente();
+        Mockito.when(obtenerClienteUseCase.obtenerClientePorIdentificacion(Mockito.any(ObtenerClienteUseCase.IdentificacionQuery.class)))
+                .thenReturn(cliente);
+        final String clienteId = "\"cliente_id\":1";
+
+        var url = ClientesApi.PATH_OBTENER_CLIENTE_POR_IDENTIFICACION.replace("{identificacion}", "123456");
+        mockMvc.perform(MockMvcRequestBuilders.get(url))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(clienteId)))
+        ;
+    }
+
+    @Test
+    void _obtenerClientePorIdentificacionSinClienteExistenteTest() throws Exception {
+        Mockito.when(obtenerClienteUseCase.obtenerClientePorIdentificacion(Mockito.any(ObtenerClienteUseCase.IdentificacionQuery.class)))
+                .thenThrow(new ClienteException("Test"));
+
+        final String codigoError = "\"codigo\":\"99\"";
+        final String mensajeError = "\"mensaje\":\"Test\"";
+
+        var url = ClientesApi.PATH_OBTENER_CLIENTE_POR_IDENTIFICACION.replace("{identificacion}", "123456");
+        mockMvc.perform(MockMvcRequestBuilders.get(url))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(codigoError)))
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(mensajeError)))
+        ;
+    }
 }

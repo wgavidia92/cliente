@@ -30,28 +30,28 @@ class ClientesApiImp implements ClientesApi {
     }
 
     @Override
-    public ResponseEntity<Cliente> _createCliente(Cliente cliente) throws ClienteException {
+    public ResponseEntity<Cliente> _crearCliente(Cliente cliente) throws ClienteException {
         var command = new ActualizarClienteUseCase.NuevoClienteCommand(ClienteMapper.from(cliente));
         var nuevoCliente = actualizarClienteUseCase.guardarCliente(command);
         return ResponseEntity.ok(ClienteMapper.from(nuevoCliente));
     }
 
     @Override
-    public ResponseEntity<Void> _deleteUser(String identificacion) throws ClienteException {
+    public ResponseEntity<Void> _eliminarCliente(String identificacion) throws ClienteException {
         var command = new ActualizarClienteUseCase.IdentificacionCommand(identificacion);
         actualizarClienteUseCase.eliminarCliente(command);
         return ResponseEntity.ok().build();
     }
 
     @Override
-    public ResponseEntity<Cliente> _getClienteByIdentificacion(String identificacion) throws ClienteException {
+    public ResponseEntity<Cliente> _obtenerClientePorIdentificacion(String identificacion) throws ClienteException {
         var query = new ObtenerClienteUseCase.IdentificacionQuery(identificacion);
         var cliente = obtenerClienteUseCase.obtenerClientePorIdentificacion(query);
         return ResponseEntity.ok(ClienteMapper.from(cliente));
     }
 
     @Override
-    public ResponseEntity<List<Cliente>> _obtenerClientes() throws ClienteException {
+    public ResponseEntity<List<Cliente>> _obtenerClientes() {
         var clientes = obtenerClienteUseCase.obtenerClientes()
                 .stream()
                 .map(ClienteMapper::from)

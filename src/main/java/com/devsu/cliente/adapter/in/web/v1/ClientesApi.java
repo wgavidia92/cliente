@@ -19,23 +19,30 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Generated;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.context.request.NativeWebRequest;
 
 import java.util.List;
+import java.util.Optional;
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-10-22T22:37:40.528690-05:00[America/Bogota]", comments = "Generator version: 7.26.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-10-23T23:37:28.224857-05:00[America/Bogota]", comments = "Generator version: 7.26.0")
 @Validated
 @Tag(name = "Clientes", description = "Operaciones que permiten actualizar la informacion de los clientes")
 public interface ClientesApi {
 
+    default Optional<NativeWebRequest> getRequest() {
+        return Optional.empty();
+    }
+
     String PATH_ACTUALIZAR_CLIENTE = "/v1/clientes/{identificacion}";
-    String PATH_CREATE_CLIENTE = "/v1/clientes";
-    String PATH_DELETE_USER = "/v1/clientes/{identificacion}";
-    String PATH_GET_CLIENTE_BY_IDENTIFICACION = "/v1/clientes/{identificacion}";
+    String PATH_CREAR_CLIENTE = "/v1/clientes";
+    String PATH_ELIMINAR_CLIENTE = "/v1/clientes/{identificacion}";
+    String PATH_OBTENER_CLIENTE_POR_IDENTIFICACION = "/v1/clientes/{identificacion}";
     String PATH_OBTENER_CLIENTES = "/v1/clientes";
 
     /**
@@ -43,16 +50,16 @@ public interface ClientesApi {
      *
      * @param identificacion (required)
      * @param cliente        (optional)
-     * @return successful operation (status code 200)
-     * or Unexpected error (status code 200)
+     * @return Informacion de cliente actualizada (status code 200)
+     * or Error en el sistema (status code 400)
      */
     @Operation(
             operationId = "actualizarCliente",
             summary = "Actualizar informacion del cliente.",
             tags = {"Clientes"},
             responses = {
-                    @ApiResponse(responseCode = "200", description = "successful operation"),
-                    @ApiResponse(description = "Unexpected error", content = {
+                    @ApiResponse(responseCode = "200", description = "Informacion de cliente actualizada"),
+                    @ApiResponse(responseCode = "400", description = "Error en el sistema", content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
                     })
             }
@@ -64,8 +71,8 @@ public interface ClientesApi {
             consumes = {"application/json"}
     )
     ResponseEntity<Void> _actualizarCliente(
-            @Parameter(name = "identificacion", required = true, in = ParameterIn.PATH) @PathVariable("identificacion") String identificacion,
-            @Parameter(name = "Cliente") @Valid @RequestBody(required = false) Cliente cliente
+            @Parameter(name = "identificacion", description = "", required = true, in = ParameterIn.PATH) @PathVariable("identificacion") String identificacion,
+            @Parameter(name = "Cliente", description = "") @Valid @RequestBody(required = false) @Nullable Cliente cliente
     ) throws ClienteException;
 
 
@@ -74,96 +81,87 @@ public interface ClientesApi {
      *
      * @param cliente (optional)
      * @return Cliente creado en la base de datos (status code 200)
-     * or Unexpected error (status code 200)
+     * or Error de sistema (status code 400)
      */
     @Operation(
-            operationId = "createCliente",
+            operationId = "crearCliente",
             summary = "Crea un cliente en la base de datos.",
             tags = {"Clientes"},
             responses = {
                     @ApiResponse(responseCode = "200", description = "Cliente creado en la base de datos", content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = Cliente.class))
                     }),
-                    @ApiResponse(description = "Unexpected error", content = {
+                    @ApiResponse(responseCode = "400", description = "Error de sistema", content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
                     })
             }
     )
     @RequestMapping(
             method = RequestMethod.POST,
-            value = ClientesApi.PATH_CREATE_CLIENTE,
+            value = ClientesApi.PATH_CREAR_CLIENTE,
             produces = {"application/json"},
             consumes = {"application/json"}
     )
-    ResponseEntity<Cliente> _createCliente(
-            @Parameter(name = "Cliente") @Valid @RequestBody(required = false) Cliente cliente
+    ResponseEntity<Cliente> _crearCliente(
+            @Parameter(name = "Cliente", description = "") @Valid @RequestBody(required = false) @Nullable Cliente cliente
     ) throws ClienteException;
 
 
     /**
-     * DELETE /v1/clientes/{identificacion} : Delete user.
-     * This can only be done by the logged in user.
+     * DELETE /v1/clientes/{identificacion} : Eliminar cliente del sistema
      *
-     * @param identificacion The name that needs to be deleted (required)
-     * @return successful operation (status code 200)
-     * or Invalid username supplied (status code 400)
-     * or User not found (status code 404)
-     * or Unexpected error (status code 200)
+     * @param identificacion Identificacion del cliente que se desea eliminar (required)
+     * @return Cliente eliminado de la base de datos (status code 200)
+     * or Error en el sistema (status code 400)
      */
     @Operation(
-            operationId = "deleteUser",
-            summary = "Delete user.",
-            description = "This can only be done by the logged in user.",
+            operationId = "eliminarCliente",
+            summary = "Eliminar cliente del sistema",
             tags = {"Clientes"},
             responses = {
-                    @ApiResponse(responseCode = "200", description = "successful operation"),
-                    @ApiResponse(responseCode = "400", description = "Invalid username supplied"),
-                    @ApiResponse(responseCode = "404", description = "User not found"),
-                    @ApiResponse(description = "Unexpected error", content = {
+                    @ApiResponse(responseCode = "200", description = "Cliente eliminado de la base de datos"),
+                    @ApiResponse(responseCode = "400", description = "Error en el sistema", content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
                     })
             }
     )
     @RequestMapping(
             method = RequestMethod.DELETE,
-            value = ClientesApi.PATH_DELETE_USER,
+            value = ClientesApi.PATH_ELIMINAR_CLIENTE,
             produces = {"application/json"}
     )
-    ResponseEntity<Void> _deleteUser(
-            @Parameter(name = "identificacion", description = "The name that needs to be deleted", required = true, in = ParameterIn.PATH) @PathVariable("identificacion") String identificacion
+    ResponseEntity<Void> _eliminarCliente(
+            @Parameter(name = "identificacion", description = "Identificacion del cliente que se desea eliminar", required = true, in = ParameterIn.PATH) @PathVariable("identificacion") String identificacion
     ) throws ClienteException;
+
 
     /**
      * GET /v1/clientes/{identificacion} : Obtiene el cliente por identificacion
      *
      * @param identificacion (required)
-     * @return successful operation (status code 200)
+     * @return Retorna un cliente por numero de identificacion (status code 200)
      * or Numero de identificacion no encontrado (status code 400)
-     * or Numero de identificacion no encontrado (status code 404)
-     * or Error en el sistema (status code 200)
      */
     @Operation(
-            operationId = "getClienteByIdentificacion",
+            operationId = "obtenerClientePorIdentificacion",
             summary = "Obtiene el cliente por identificacion",
             tags = {"Clientes"},
             responses = {
-                    @ApiResponse(responseCode = "200", description = "successful operation", content = {
+                    @ApiResponse(responseCode = "200", description = "Retorna un cliente por numero de identificacion", content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = Cliente.class))
                     }),
-                    @ApiResponse(responseCode = "400", description = "Numero de identificacion no encontrado"),
-                    @ApiResponse(responseCode = "404", description = "Numero de identificacion no encontrado"),
-                    @ApiResponse(description = "Error en el sistema", content = {
+                    @ApiResponse(responseCode = "400", description = "Numero de identificacion no encontrado", content = {
                             @Content(mediaType = "application/json", schema = @Schema(implementation = Error.class))
                     })
             }
     )
     @RequestMapping(
             method = RequestMethod.GET,
-            value = ClientesApi.PATH_GET_CLIENTE_BY_IDENTIFICACION,
+            value = ClientesApi.PATH_OBTENER_CLIENTE_POR_IDENTIFICACION,
             produces = {"application/json"}
     )
-    ResponseEntity<Cliente> _getClienteByIdentificacion(
-            @Parameter(name = "identificacion", required = true, in = ParameterIn.PATH) @PathVariable("identificacion") String identificacion
+    ResponseEntity<Cliente> _obtenerClientePorIdentificacion(
+            @Parameter(name = "identificacion", description = "", required = true, in = ParameterIn.PATH) @PathVariable("identificacion") String identificacion
     ) throws ClienteException;
 
 
@@ -187,6 +185,8 @@ public interface ClientesApi {
             value = ClientesApi.PATH_OBTENER_CLIENTES,
             produces = {"application/json"}
     )
-    ResponseEntity<List<Cliente>> _obtenerClientes() throws ClienteException;
+    ResponseEntity<List<Cliente>> _obtenerClientes(
+
+    );
 
 }
