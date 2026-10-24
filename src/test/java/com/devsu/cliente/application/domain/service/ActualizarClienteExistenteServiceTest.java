@@ -19,7 +19,7 @@ class ActualizarClienteExistenteServiceTest extends ActualizarClienteAbstractSer
 
     @Test
     void actualizarClienteSinClienteIdTest() {
-        var cliente = new ClienteDto(0L, "", "", "", 0, "", "", "", "");
+        var cliente = new ClienteDto(-1L, "", "", "", 0, "", "", "", "");
         var command = new ActualizarClienteUseCase.ClienteCommand("1234", cliente);
         validarExcepcionCliente(() -> actualizarClienteUseCase.actualizarCliente(command));
     }

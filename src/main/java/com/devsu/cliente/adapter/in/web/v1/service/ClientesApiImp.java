@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-class ClientesService implements ClientesApi {
+class ClientesApiImp implements ClientesApi {
 
     private final ObtenerClienteUseCase obtenerClienteUseCase;
     private final ActualizarClienteUseCase actualizarClienteUseCase;
 
-    ClientesService(ObtenerClienteUseCase obtenerClienteUseCase, ActualizarClienteUseCase actualizarClienteUseCase) {
+    ClientesApiImp(ObtenerClienteUseCase obtenerClienteUseCase, ActualizarClienteUseCase actualizarClienteUseCase) {
         this.obtenerClienteUseCase = obtenerClienteUseCase;
         this.actualizarClienteUseCase = actualizarClienteUseCase;
     }

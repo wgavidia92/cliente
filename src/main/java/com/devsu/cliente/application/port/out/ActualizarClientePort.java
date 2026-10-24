@@ -5,7 +5,7 @@ import com.devsu.cliente.exception.ClienteException;
 
 public interface ActualizarClientePort {
 
-    ClienteDto guardarCliente(ClienteDto cliente) throws ClienteException;
+    ClienteDto guardarCliente(ClienteDto cliente);
 
     ClienteDto actualizarCliente(String identificacion, ClienteDto cliente) throws ClienteException;
 
