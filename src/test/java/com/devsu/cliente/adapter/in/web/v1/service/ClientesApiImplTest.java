@@ -17,6 +17,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.List;
+
 @WebMvcTest(ClientesApi.class)
 class ClientesApiImplTest {
 
@@ -208,4 +210,21 @@ class ClientesApiImplTest {
                 .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(mensajeError)))
         ;
     }
+
+
+    @Test
+    void _obtenerClientesTest() throws Exception {
+        var cliente = UtilsTest.generarCliente();
+        Mockito.when(obtenerClienteUseCase.obtenerClientes())
+                .thenReturn(List.of(cliente));
+        final String clienteId = "\"cliente_id\":1";
+
+        var url = ClientesApi.PATH_OBTENER_CLIENTES;
+        mockMvc.perform(MockMvcRequestBuilders.get(url))
+                .andDo(MockMvcResultHandlers.print())
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string(Matchers.containsString(clienteId)))
+        ;
+    }
+
 }

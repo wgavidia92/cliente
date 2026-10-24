@@ -3,6 +3,7 @@ plugins {
     id 'org.springframework.boot' version '4.1.1'
     id 'io.spring.dependency-management' version '1.1.7'
     id 'org.openapi.generator' version '7.26.0'
+    id 'jacoco'
 }
 
 group = 'com.devsu'
@@ -71,3 +72,58 @@ compileJava.dependsOn tasks.openApiGenerate
 processResources.dependsOn tasks.openApiGenerate
 
 processTestResources.dependsOn tasks.openApiGenerate
+
+jacoco {
+    toolVersion = '0.8.15'
+    reportsDirectory = layout.buildDirectory.dir('jacocoTestReport')
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+def coverageExcludes = [
+        '**/ApiUtil.class',
+        '**/ClientesApi.class',
+        '**/adapter/in/web/**/model/**'
+]
+
+jacocoTestReport {
+    dependsOn test
+
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, exclude: coverageExcludes)
+                })
+        )
+    }
+
+    reports {
+        xml.required = false
+        csv.required = false
+        html.required = true
+    }
+}
+
+jacocoTestCoverageVerification {
+    afterEvaluate {
+        classDirectories.setFrom(
+                files(classDirectories.files.collect {
+                    fileTree(dir: it, exclude: coverageExcludes)
+                })
+        )
+    }
+
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.98
+            }
+        }
+
+    }
+}
+
+check.dependsOn jacocoTestCoverageVerification
