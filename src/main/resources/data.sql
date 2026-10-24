@@ -1,3 +1,5 @@
 INSERT INTO "CLIENTE" ("CONTRASENA", "DIRECCION", "EDAD", "ESTADO", "GENERO", "IDENTIFICACION", "NOMBRE", "TELEFONO")
-VALUES ('pass123', 'Carrera 1', '34', 'A', 'M', '123456', 'Wilmer Gavidia', '123456');
+VALUES ('1234', 'Otavalo sn y principal', '34', TRUE, 'M', '123456', 'Jose Lema', '098254785');
 
+INSERT INTO "CLIENTE" ("CONTRASENA", "DIRECCION", "EDAD", "ESTADO", "GENERO", "IDENTIFICACION", "NOMBRE", "TELEFONO")
+VALUES ('5678', 'Amazonas y NNUU', '23', TRUE, 'F', '5696488', 'Marinela Montalvo', '097548965');

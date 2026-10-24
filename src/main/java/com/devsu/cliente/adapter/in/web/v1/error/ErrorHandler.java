@@ -19,8 +19,8 @@ class ErrorHandler {
     Error clienteException(ClienteException ex) {
         LOGGER.error(ex.getMessage(), ex);
         return new Error()
-                .message(ex.getMessage())
-                .code("99");
+                .mensaje(ex.getMessage())
+                .codigo("99");
     }
 
 }

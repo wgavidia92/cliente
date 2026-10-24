@@ -13,42 +13,35 @@ class ActualizarClienteNuevoServiceTest extends ActualizarClienteAbstractService
 
     @Test
     void guardarClienteSinIdentificacionTest() throws ClienteException {
-        var cliente = new ClienteDto(0L, "", "", "", 0, "", "", "", "");
+        var cliente = new ClienteDto(0L, "", "", "", 0, "", "", "", true);
         var command = new ActualizarClienteUseCase.NuevoClienteCommand(cliente);
         validarExcepcionCliente(() -> actualizarClienteUseCase.guardarCliente(command));
     }
 
     @Test
     void guardarClienteSinNombreTest() throws ClienteException {
-        var cliente = new ClienteDto(0L, "1234", "", "", 0, "", "", "", "");
+        var cliente = new ClienteDto(0L, "1234", "", "", 0, "", "", "", true);
         var command = new ActualizarClienteUseCase.NuevoClienteCommand(cliente);
         validarExcepcionCliente(() -> actualizarClienteUseCase.guardarCliente(command));
     }
 
     @Test
     void guardarClienteSinGeneroTest() throws ClienteException {
-        var cliente = new ClienteDto(0L, "1234", "Wilmer", "", 0, "", "", "", "");
-        var command = new ActualizarClienteUseCase.NuevoClienteCommand(cliente);
-        validarExcepcionCliente(() -> actualizarClienteUseCase.guardarCliente(command));
-    }
-
-    @Test
-    void guardarClienteSinEstadoTest() throws ClienteException {
-        var cliente = new ClienteDto(0L, "1234", "Wilmer", "M", 0, "", "", "", "");
+        var cliente = new ClienteDto(0L, "1234", "Wilmer", "", 0, "", "", "", true);
         var command = new ActualizarClienteUseCase.NuevoClienteCommand(cliente);
         validarExcepcionCliente(() -> actualizarClienteUseCase.guardarCliente(command));
     }
 
     @Test
     void guardarClienteSinContrasenaTest() throws ClienteException {
-        var cliente = new ClienteDto(0L, "1234", "Wilmer", "M", 0, "", "", "", "A");
+        var cliente = new ClienteDto(0L, "1234", "Wilmer", "M", 0, "", "", "", true);
         var command = new ActualizarClienteUseCase.NuevoClienteCommand(cliente);
         validarExcepcionCliente(() -> actualizarClienteUseCase.guardarCliente(command));
     }
 
     @Test
     void guardarTest() throws ClienteException {
-        var cliente = new ClienteDto(0L, "1234", "Wilmer", "M", 0, "", "", "pass123", "A");
+        var cliente = new ClienteDto(0L, "1234", "Wilmer", "M", 0, "", "", "pass123", true);
         var command = new ActualizarClienteUseCase.NuevoClienteCommand(cliente);
         Assertions.assertDoesNotThrow(() -> actualizarClienteUseCase.guardarCliente(command));
     }

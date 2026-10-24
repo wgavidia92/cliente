@@ -9,6 +9,6 @@ public record ClienteDto(
         String direccion,
         String telefono,
         String contrasena,
-        String estado
+        boolean estado
 ) {
 }

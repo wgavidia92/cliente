@@ -7,7 +7,7 @@ import org.springframework.util.StringUtils;
 
 public interface ActualizarClienteUseCase {
 
-    static final String ERROR_VALIDACION_DATOS = "Informacion de cliente incompleta";
+    String ERROR_VALIDACION_DATOS = "Informacion de cliente incompleta";
 
     ClienteDto guardarCliente(NuevoClienteCommand command) throws ClienteException;
 
@@ -30,7 +30,6 @@ public interface ActualizarClienteUseCase {
             validarDato(cliente.identificacion());
             validarDato(cliente.nombre());
             validarDato(cliente.genero());
-            validarDato(cliente.estado());
             validarDato(cliente.contrasena());
         }
 
@@ -51,7 +50,6 @@ public interface ActualizarClienteUseCase {
 
             validarDato(cliente.nombre());
             validarDato(cliente.genero());
-            validarDato(cliente.estado());
             validarDato(cliente.contrasena());
         }
 

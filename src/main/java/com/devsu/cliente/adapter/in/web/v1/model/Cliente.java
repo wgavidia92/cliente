@@ -10,7 +10,7 @@ import java.util.Objects;
  * Cliente
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-10-22T22:37:40.528690-05:00[America/Bogota]", comments = "Generator version: 7.26.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-10-23T23:30:45.689941-05:00[America/Bogota]", comments = "Generator version: 7.26.0")
 public class Cliente {
 
     private Long clienteId;
@@ -29,7 +29,7 @@ public class Cliente {
 
     private String telefono;
 
-    private String estado;
+    private Boolean estado;
 
     public Cliente clienteId(Long clienteId) {
         this.clienteId = clienteId;
@@ -207,7 +207,7 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    public Cliente estado(String estado) {
+    public Cliente estado(Boolean estado) {
         this.estado = estado;
         return this;
     }
@@ -218,14 +218,14 @@ public class Cliente {
      * @return estado
      */
 
-    @Schema(name = "estado", example = "A", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
+    @Schema(name = "estado", example = "true", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
     @JsonProperty("estado")
-    public String getEstado() {
+    public Boolean getEstado() {
         return estado;
     }
 
     @JsonProperty("estado")
-    public void setEstado(String estado) {
+    public void setEstado(Boolean estado) {
         this.estado = estado;
     }
 

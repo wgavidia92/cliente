@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ObtenerClienteUseCase {
 
-    static final String ERROR_VALIDACION_IDENTIFICACION = "El numero de identificacion es obligatorio";
+    String ERROR_VALIDACION_IDENTIFICACION = "El numero de identificacion es obligatorio";
 
     List<ClienteDto> obtenerClientes();
 

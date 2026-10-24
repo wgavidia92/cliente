@@ -15,7 +15,7 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-  - url: https://localhost
+  - url: http://localhost:8080
 tags:
   - name: Clientes
     description: Operaciones que permiten actualizar la informacion de los clientes
@@ -39,7 +39,7 @@ paths:
       tags:
         - Clientes
       summary: Crea un cliente en la base de datos.
-      operationId: createCliente
+      operationId: crearCliente
       requestBody:
         content:
           application/json:
@@ -52,8 +52,8 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Cliente'
-        default:
-          description: Unexpected error
+        400:
+          description: Error de sistema
           content:
             application/json:
               schema:
@@ -63,7 +63,7 @@ paths:
       tags:
         - Clientes
       summary: Obtiene el cliente por identificacion
-      operationId: getClienteByIdentificacion
+      operationId: obtenerClientePorIdentificacion
       parameters:
         - name: identificacion
           in: path
@@ -72,17 +72,13 @@ paths:
             type: string
       responses:
         '200':
-          description: successful operation
+          description: Retorna un cliente por numero de identificacion
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Cliente'
         '400':
           description: Numero de identificacion no encontrado
-        '404':
-          description: Numero de identificacion no encontrado
-        default:
-          description: Error en el sistema
           content:
             application/json:
               schema:
@@ -105,9 +101,9 @@ paths:
               $ref: '#/components/schemas/Cliente'
       responses:
         '200':
-          description: successful operation
-        default:
-          description: Unexpected error
+          description: Informacion de cliente actualizada
+        400:
+          description: Error en el sistema
           content:
             application/json:
               schema:
@@ -115,25 +111,20 @@ paths:
     delete:
       tags:
         - Clientes
-      summary: Delete user.
-      description: This can only be done by the logged in user.
-      operationId: deleteUser
+      summary: Eliminar cliente del sistema
+      operationId: eliminarCliente
       parameters:
         - name: identificacion
           in: path
-          description: The name that needs to be deleted
+          description: Identificacion del cliente que se desea eliminar
           required: true
           schema:
             type: string
       responses:
         '200':
-          description: successful operation
+          description: Cliente eliminado de la base de datos
         '400':
-          description: Invalid username supplied
-        '404':
-          description: User not found
-        default:
-          description: Unexpected error
+          description: Error en el sistema
           content:
             application/json:
               schema:
@@ -169,19 +160,19 @@ components:
           type: string
           example: '12345'
         estado:
-          type: string
-          example: 'A'
+          type: boolean
+          example: true
 
     Error:
       type: object
       properties:
-        code:
+        codigo:
           type: string
-        message:
+        mensaje:
           type: string
       required:
-        - code
-        - message
+        - codigo
+        - mensaje
   requestBodies:
     Cliente:
       description: Informacion del cliente

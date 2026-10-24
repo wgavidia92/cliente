@@ -20,6 +20,6 @@ record ClienteEntity(
         String direccion,
         String telefono,
         String contrasena,
-        String estado
+        boolean estado
 ) {
 }

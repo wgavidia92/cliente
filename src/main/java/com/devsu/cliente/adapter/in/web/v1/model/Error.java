@@ -11,12 +11,12 @@ import java.util.Objects;
  * Error
  */
 
-@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-10-22T22:37:40.528690-05:00[America/Bogota]", comments = "Generator version: 7.26.0")
+@Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2026-10-23T23:30:45.689941-05:00[America/Bogota]", comments = "Generator version: 7.26.0")
 public class Error {
 
-    private String code;
+    private String codigo;
 
-    private String message;
+    private String mensaje;
 
     public Error() {
         super();
@@ -25,53 +25,53 @@ public class Error {
     /**
      * Constructor with only required parameters
      */
-    public Error(String code, String message) {
-        this.code = code;
-        this.message = message;
+    public Error(String codigo, String mensaje) {
+        this.codigo = codigo;
+        this.mensaje = mensaje;
     }
 
-    public Error code(String code) {
-        this.code = code;
+    public Error codigo(String codigo) {
+        this.codigo = codigo;
         return this;
     }
 
     /**
-     * Get code
+     * Get codigo
      *
-     * @return code
+     * @return codigo
      */
     @NotNull
-    @Schema(name = "code", requiredMode = Schema.RequiredMode.REQUIRED)
-    @JsonProperty("code")
-    public String getCode() {
-        return code;
+    @Schema(name = "codigo", requiredMode = Schema.RequiredMode.REQUIRED)
+    @JsonProperty("codigo")
+    public String getCodigo() {
+        return codigo;
     }
 
-    @JsonProperty("code")
-    public void setCode(String code) {
-        this.code = code;
+    @JsonProperty("codigo")
+    public void setCodigo(String codigo) {
+        this.codigo = codigo;
     }
 
-    public Error message(String message) {
-        this.message = message;
+    public Error mensaje(String mensaje) {
+        this.mensaje = mensaje;
         return this;
     }
 
     /**
-     * Get message
+     * Get mensaje
      *
-     * @return message
+     * @return mensaje
      */
     @NotNull
-    @Schema(name = "message", requiredMode = Schema.RequiredMode.REQUIRED)
-    @JsonProperty("message")
-    public String getMessage() {
-        return message;
+    @Schema(name = "mensaje", requiredMode = Schema.RequiredMode.REQUIRED)
+    @JsonProperty("mensaje")
+    public String getMensaje() {
+        return mensaje;
     }
 
-    @JsonProperty("message")
-    public void setMessage(String message) {
-        this.message = message;
+    @JsonProperty("mensaje")
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 
     @Override
@@ -83,21 +83,21 @@ public class Error {
             return false;
         }
         Error error = (Error) o;
-        return Objects.equals(this.code, error.code) &&
-                Objects.equals(this.message, error.message);
+        return Objects.equals(this.codigo, error.codigo) &&
+                Objects.equals(this.mensaje, error.mensaje);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(code, message);
+        return Objects.hash(codigo, mensaje);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb.append("class Error {\n");
-        sb.append("    code: ").append(toIndentedString(code)).append("\n");
-        sb.append("    message: ").append(toIndentedString(message)).append("\n");
+        sb.append("    codigo: ").append(toIndentedString(codigo)).append("\n");
+        sb.append("    mensaje: ").append(toIndentedString(mensaje)).append("\n");
         sb.append("}");
         return sb.toString();
     }

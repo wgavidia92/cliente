@@ -91,7 +91,7 @@ class ClienteAdapterTest {
                 "",
                 "",
                 "",
-                "");
+                true);
     }
 
 }
